@@ -8,15 +8,17 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/api/registro', methods=['POST'])
 def registro():
     data = request.get_json()
-    
     if Usuario.query.filter_by(email=data['email']).first():
-        return jsonify({'error': 'El email ya está registrado'}), 400
+        return jsonify({'error': 'El email ya esta registrado'}), 400
+
+    total_usuarios = Usuario.query.count()
+    rol = 'admin' if total_usuarios == 0 else 'vendedor'
 
     nuevo = Usuario(
         nombre   = data['nombre'],
         email    = data['email'],
         password = auth.encriptar_password(data['password']),
-        rol      = data.get('rol', 'vendedor')
+        rol      = rol
     )
     db.session.add(nuevo)
     db.session.commit()
@@ -24,14 +26,12 @@ def registro():
 
 @auth_bp.route('/api/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    data    = request.get_json()
     usuario = Usuario.query.filter_by(email=data['email']).first()
-
     if not usuario or not auth.verificar_password(data['password'], usuario.password):
         return jsonify({'error': 'Credenciales incorrectas'}), 401
-
     token = auth.generar_token(usuario.id, usuario.email)
     return jsonify({
-        'token': token,
+        'token':   token,
         'usuario': usuario.to_dict()
     })
