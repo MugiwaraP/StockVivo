@@ -67,9 +67,9 @@
         <div class="table-header">
           <div class="table-title">Productos</div>
           <div class="table-header-right">
-            <select class="filter-select" id="filtro-categoria" onchange="filtrarPorCategoria()">
-              <option value="">Todas las categorías</option>
-            </select>
+          <select class="filter-select" id="filtro-categoria" onchange="filtrarPorCategoria()" aria-label="Filtrar productos por categoría">
+            <option value="">Todas las categorías</option>
+          </select>
             <input class="search-input" placeholder="Buscar..." oninput="filtrar(this.value)" />
           </div>
         </div>
@@ -210,7 +210,7 @@
             placeholder="Descripción breve" /></div>
         <div class="field full">
           <label>Categoría</label>
-          <select id="f-categoria">
+          <select id="f-categoria" aria-label="Seleccionar categoría del producto">
             <option value="">Sin categoría</option>
           </select>
         </div>
@@ -234,8 +234,15 @@
     <div class="modal">
       <div class="modal-title">Registrar <span>Movimiento</span></div>
       <div class="modal-grid">
-        <div class="field full"><label>Producto</label><select id="m-producto"></select></div>
-        <div class="field"><label>Tipo</label><select id="m-tipo">
+      <div class="field full"> <label for="m-producto">Producto</label> 
+        <select id="m-producto"></select>
+      </div>
+      <div class="field">
+        <label for="m-tipo">Tipo</label>
+        <select id="m-tipo"> <option value="entrada">Entrada</option>
+          <option value="salida">Salida</option>
+         </select>
+        </div>
             <option value="entrada">Entrada</option>
             <option value="salida">Salida</option>
           </select></div>
