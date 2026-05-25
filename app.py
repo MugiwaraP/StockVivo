@@ -58,6 +58,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-# Ejecutar aplicación
+# Ejecutar aplicación Web
 if __name__ == '__main__':
     app.run(debug=True)
